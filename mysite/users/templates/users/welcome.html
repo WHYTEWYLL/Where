@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    {% load crispy_forms_tags %}
+
+    <h2>Área para miembros</h2>
+    <p>
+        Bienvenido <b>{{request.user.username}}</b>, 
+        esta página es exclusiva para usuarios registrados.
+    </p>
+
+    
+    <form action = "" method = "post"> 
+        {% csrf_token %}
+        {{form | crispy }} 
+        <input type="submit" value="Save"> 
+    </form>
+
+
+<hr />
+    <p id = "nuevo_point1" > {{nuevosdatos.nuevo_point1|first}}</p>
+    <p id = "nuevo_point1_1" > {{nuevosdatos.nuevo_point1|last}}</p>
+    <p id = "nuevo_point2" > {{nuevosdatos.nuevo_point2|first}}</p>
+    <p id = "nuevo_point2_1" > {{nuevosdatos.nuevo_point2|last}}</p>
+    <p id = "punto_medio" > {{nuevosdatos.punto_medio|first}}</p>
+    <p id = "punto_medio_1" > {{nuevosdatos.punto_medio|last}}</p>
+<a href="/logout">Cerrar sesión</a>
+
+<hr />
+
+
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charse t="utf-8">
+    <style>
+
+      #map {
+        height: 100%;
+      }
+
+      html, body {
+        height: 100%;
+        margin: 100;
+        padding: 50;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+        
+        function initMap() {
+          var directionsService = new google.maps.DirectionsService;
+          var directionsDisplay = new google.maps.DirectionsRenderer({
+      preserveViewport: true,
+      markerOptions: {
+        visible: false
+      }
+    });
+          var directionsDisplay1 = new google.maps.DirectionsRenderer;
+          
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 3,
+            center: {lat: 41.85, lng: -87.65}
+          });
+          var haight = new google.maps.LatLng(document.getElementById("nuevo_point1").innerHTML,document.getElementById("nuevo_point1_1").innerHTML);
+          var oceanBeach =  new google.maps.LatLng(document.getElementById("nuevo_point2").innerHTML,document.getElementById("nuevo_point2_1").innerHTML);
+          var other =  new google.maps.LatLng(document.getElementById("punto_medio").innerHTML,document.getElementById("punto_medio_1").innerHTML);
+          var bounds = new google.maps.LatLngBounds(haight,oceanBeach);
+          
+
+          directionsDisplay.setMap(map);
+          map.fitBounds(bounds);
+          directionsDisplay1.setMap(map);
+          calculateAndDisplayRoute(haight,other,directionsService, directionsDisplay,bounds);
+          calculateAndDisplayRoute(oceanBeach,other,directionsService, directionsDisplay1,bounds);
+
+        }
+        
+        function calculateAndDisplayRoute(haight,oceanBeach,dS=directionsService, dD=directionsDisplay,bounds) {
+          
+          dS.route({
+            origin: haight,
+            destination: oceanBeach,
+            travelMode: 'DRIVING'
+          }, function(response, status) {
+            if (status === 'OK') {
+              dD.setDirections(response);
+            }
+          })
+
+          
+          ;
+          
+    }
+      </script>
+      <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=api&callback=initMap">
+    </script>
+  </body>
+</html>
