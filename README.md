@@ -17,6 +17,5 @@ Tecnologías utilizadas:
 
 | ![alt-text-1](https://github.com/WHYTEWYLL/Where/blob/master/mysite/users/static/images/Captura%20de%20pantalla%202020-08-04%20a%20las%200.12.31.png)] |  ![alt-text-2](https://github.com/WHYTEWYLL/Where/blob/master/mysite/users/static/images/Captura%20de%20pantalla%202020-08-04%20a%20las%200.12.40.png)|
 ![alt-text-3](https://github.com/WHYTEWYLL/Where/blob/master/mysite/users/static/images/Captura%20de%20pantalla%202020-08-04%20a%20las%200.12.45.png)|
-![alt-text-4](https://github.com/WHYTEWYLL/Where/blob/master/mysite/users/static/images/Captura%20de%20pantalla%202020-08-04%20a%20las%200.13.32.png)
-
-|:---:|:---:|:---:|
+![alt-text-4](https://github.com/WHYTEWYLL/Where/blob/master/mysite/users/static/images/Captura%20de%20pantalla%202020-08-04%20a%20las%200.13.32.png)|
+|:---:|:---:|:---:|:---:|
