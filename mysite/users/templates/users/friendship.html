@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html>
+    <head>  
+        {% load friendshiptags %}
+    </head>
+    <body>
+        {{% friends request.user %}}
+        {{% followers request.user %}}
+        {% following request.user %}
+        {% friend_requests request.user %}
+        {% blockers request.user %}
+        {% blocking request.user %}
+    </body>
+</html>

@@ -1,10 +1,129 @@
-<h2>Iniciar sesión</h2>
+<!DOCTYPE html>
+  <head>
+    {% load static %}
+    <style>
 
-<form method="POST">
-    {{ form.as_p }}
+    div{
+      border: #2980b9 4px 
+    }
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .wrapper{
+        width: 1170px;
+        margin:auto;
+    }
+    header{
+        background: url("{% static 'images/back.png'%}");
+        height: 100vh;
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+        width: 100%;
+        background-position:  0 120px;
+        background-repeat: no-repeat;
+                }
+    .nav-are{
+        float:right;
+        list-style: none;
+        margin-top: 30px;
+    }
+    .nav-are li{
+        display: inline-block;
+        background-color: #4CAF50;
+        overflow: hidden;
+    }
+    .nav-are li a{
+        color: rgb(0, 0, 0);
+        text-decoration: none;
+        padding: 5px 20px;
+        font-family: poppins;
+        font-size: 23px;
+        float: right;
+
+    }
+    .nav-are  a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    /* Change the color of links on hover */
+    .nav-are  a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .nav-are a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .logo img{
+        width:  150px;
+        float: left;
+        height: auto;
+    }
+    .login {
+      background: #eceeee;
+      border: 1px solid #42464b;
+      border-radius: 6px;
+      height: 215px;
+      margin: 29px auto 0;
+      width: 350px;
+      left: 65%;
+      top: 80%;
+      margin-left: -25%;
+      position: absolute;
+      margin-top: -25%;
+      
+    }
+    .button {
+      color: black;
+      border-radius: 4px;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+      background: #4CAF50;
+      padding: 8px 12px;
+      font-size: 16px;
+    }
+    input[type="password"], input[type="text"] {
+      width: 100%;
+      padding: 12px 25px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      
+    }
+
+    </style>
+  </head>
+<body>
+{% load crispy_forms_tags %}
+<header>
+  <div class= "wrapper"> 
+    <div class="logo">
+        <a href="/home">
+        <img src="{% static 'images/logo.jpg'%}" alt="">
+        </a>
+    </div>
+    <ul class="nav-are">
+        <li><a href="/home" class="w3-button w3-bar-item">Home</a> </li>
+        <li><a href="/register" class="w3-button w3-bar-item">Register</a></li>
+        <li><a href="/login" class="w3-button w3-bar-item">Login</a></li>
+    </ul>
+</div>
+</header>
+<form class = "login",action = "" method="POST">
+    <h2 >Iniciar sesión</h2>
     {% csrf_token %}
-    <button type="submit">Login</button>
+    {{ form | crispy }}
+    <button class="button" type="submit">Login</button>
 </form>
-
-<hr />
-<a href="/register">Registrar usuario</a>
+</header>
+</body>

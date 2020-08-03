@@ -5,15 +5,19 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from .forms import UserRegisterForm , New_middlepoint
 from .models import Middlepoint, MyUsers , Friends
+from friendship.models import Friend, Follow, Block
 from src.apicall import *
-from django.utils.safestring import SafeString
 # Create your views here.
+
+
+def home(request):
+    return render(request, "users/home.html")
 
 def welcome(request):
     if request.user.is_authenticated:
         users = MyUsers.objects.exclude(id = request.user.id)
         form = New_middlepoint(request.POST or None) 
-        #friends = Friends.objects.all()        
+        #friends = Friends.objects.all()   
         if form.is_valid():
             form.instance.user = request.user
             form.instance.middle_points,form.instance.infomarti,form.instance.point_1,form.instance.point_2,nuevo_medio = (my_api_call(form.instance.point_1,form.instance.point_2,tipo =form.instance.type_of_point))
@@ -21,7 +25,7 @@ def welcome(request):
             form.save()
             return render(request, "users/welcome.html",{'form': form,'users':users,"nuevosdatos":nuevosdatos})
         return render(request, "users/welcome.html",{'form': form,'users':users})
-    return redirect("/")    
+    return redirect("/home")    
 
 def register(request):
     form= UserRegisterForm()

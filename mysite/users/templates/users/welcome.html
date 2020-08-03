@@ -1,7 +1,51 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html>
+  <style>
+    input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+    form {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.logo img{
+            width:  100px;
+            float: right;
+            height: auto;
+        }
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+    
+    </style>
+
     {% load crispy_forms_tags %}
 
+    <div class="logo">
+      <a href="/home">
+      <img src="{% static 'images/logo.jpg'%}" alt="">
+      </a>
+    </div>
     <h2>Área para miembros</h2>
     <p>
         Bienvenido <b>{{request.user.username}}</b>, 
@@ -11,23 +55,20 @@
     
     <form action = "" method = "post"> 
         {% csrf_token %}
-        {{form | crispy }} 
-        <input type="submit" value="Save"> 
+        {{form | crispy }}   
+        <input type="submit" value="Save">  
     </form>
 
 
-<hr />
-    <p id = "nuevo_point1" > {{nuevosdatos.nuevo_point1|first}}</p>
-    <p id = "nuevo_point1_1" > {{nuevosdatos.nuevo_point1|last}}</p>
-    <p id = "nuevo_point2" > {{nuevosdatos.nuevo_point2|first}}</p>
-    <p id = "nuevo_point2_1" > {{nuevosdatos.nuevo_point2|last}}</p>
-    <p id = "punto_medio" > {{nuevosdatos.punto_medio|first}}</p>
-    <p id = "punto_medio_1" > {{nuevosdatos.punto_medio|last}}</p>
+    <div style="display:none"id = "nuevo_point1" > {{nuevosdatos.nuevo_point1|first}}</div>
+    <div style="display:none"id = "nuevo_point1_1" > {{nuevosdatos.nuevo_point1|last}}</div>
+    <div style="display:none"id = "nuevo_point2" > {{nuevosdatos.nuevo_point2|first}}</div>
+    <div style="display:none"id = "nuevo_point2_1" > {{nuevosdatos.nuevo_point2|last}}</div>
+    <div style="display:none"id = "punto_medio" > {{nuevosdatos.punto_medio|first}}</div>
+    <div style="display:none"id = "punto_medio_1" > {{nuevosdatos.punto_medio|last}}</div>
 <a href="/logout">Cerrar sesión</a>
 
 <hr />
-
-
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charse t="utf-8">
@@ -43,42 +84,24 @@
         padding: 50;
       }
       
-    </style>
-  </head>
+      </style>
+    </head>
   <body>
     <div id="map"></div>
     <script>
-        
         function initMap() {
-          var directionsService = new google.maps.DirectionsService;
-          var directionsDisplay = new google.maps.DirectionsRenderer({
-      preserveViewport: true,
-      markerOptions: {
-        visible: false
-      }
-    });
-          var directionsDisplay1 = new google.maps.DirectionsRenderer;
-          
-          var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 3,
-            center: {lat: 41.85, lng: -87.65}
-          });
           var haight = new google.maps.LatLng(document.getElementById("nuevo_point1").innerHTML,document.getElementById("nuevo_point1_1").innerHTML);
           var oceanBeach =  new google.maps.LatLng(document.getElementById("nuevo_point2").innerHTML,document.getElementById("nuevo_point2_1").innerHTML);
           var other =  new google.maps.LatLng(document.getElementById("punto_medio").innerHTML,document.getElementById("punto_medio_1").innerHTML);
-          var bounds = new google.maps.LatLngBounds(haight,oceanBeach);
-          
-
-          directionsDisplay.setMap(map);
-          map.fitBounds(bounds);
-          directionsDisplay1.setMap(map);
-          calculateAndDisplayRoute(haight,other,directionsService, directionsDisplay,bounds);
-          calculateAndDisplayRoute(oceanBeach,other,directionsService, directionsDisplay1,bounds);
-
-        }
-        
-        function calculateAndDisplayRoute(haight,oceanBeach,dS=directionsService, dD=directionsDisplay,bounds) {
-          
+          function getbounds(){
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(haight);
+            bounds.extend(oceanBeach);
+            bounds.extend(other);
+            console.log(haight,oceanBeach,other)
+            return bounds;
+          }
+          function calculateAndDisplayRoute(map,haight,oceanBeach,dS=directionsService, dD=directionsDisplay) {
           dS.route({
             origin: haight,
             destination: oceanBeach,
@@ -86,13 +109,28 @@
           }, function(response, status) {
             if (status === 'OK') {
               dD.setDirections(response);
+              map.fitBounds(getbounds());
             }
-          })
+          });
+        }
+          var directionsService = new google.maps.DirectionsService;
+          var directionsDisplay = new google.maps.DirectionsRenderer;
+          var directionsDisplay1 = new google.maps.DirectionsRenderer;
+          
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 3,
+            center: {lat: 41.85, lng: -87.65}
+          });
+          
+          directionsDisplay.setMap(map);
+          directionsDisplay1.setMap(map);
+          calculateAndDisplayRoute(map,haight,other,directionsService, directionsDisplay);
+          calculateAndDisplayRoute(map,oceanBeach,other,directionsService, directionsDisplay1);
 
-          
-          ;
-          
-    }
+
+        }
+        
+       
       </script>
       <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=api&callback=initMap">
