@@ -4,7 +4,7 @@
 
 # Where
 
-En este proyecto consiste en una Web App, basado en  Django. Donde los usurios son capaces de utilizar un servicio el cual les ofrece un punto intermedio perfecto para quedar entre dos amigos.
+En proyecto consiste en una Web App, basado en  Django. Donde los usurios son capaces de utilizar un servicio el cual les ofrece un punto intermedio perfecto para quedar entre dos amigos.
 
 Tecnologías utilizadas:
 
